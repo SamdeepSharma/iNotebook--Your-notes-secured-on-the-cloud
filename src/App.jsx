@@ -1,10 +1,18 @@
 import './App.css'
+import {Route, Routes} from 'react-router-dom'
+import Home from "./components/Home"
+import Navbar from "./components/Navbar"
+import Notes from "./components/Notes"
 
 function App() {
 
   return (
     <>
-      <h1>This is iNotebook</h1>
+    <Navbar/>
+    <Routes>
+      <Route exact path="/" element = {<Home/>}/>
+      <Route exact path="/Notes" element = {<Notes/>}/>
+    </Routes>
     </>
   )
 }
