@@ -1,19 +1,28 @@
 import './App.css'
-import {Route, Routes} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Home from "./components/Home"
 import Navbar from "./components/Navbar"
 import Notes from "./components/Notes"
+import NoteState from './context/notes/NoteState'
+import About from './components/About'
+import Contact from './components/Contact'
 
 function App() {
 
   return (
-    <>
-    <Navbar/>
-    <Routes>
-      <Route exact path="/" element = {<Home/>}/>
-      <Route exact path="/Notes" element = {<Notes/>}/>
-    </Routes>
-    </>
+    <div className='bg-body-secondary'>
+      <NoteState>
+        <Navbar />
+        <div className="container">
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/notes" element={<Notes />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/contact" element={<Contact />} />
+        </Routes>
+        </div>
+      </NoteState>
+    </div>
   )
 }
 
