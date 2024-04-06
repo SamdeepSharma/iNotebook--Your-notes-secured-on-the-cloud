@@ -5,7 +5,7 @@ import { useContext, useState } from "react"
 const AddNote = () => {
      const context = useContext(noteContext)
      const { addNote } = context;
-     const def = {title: "", description: "", tag: "default" }
+     const def = {title: "", description: "", tag: "" }
      const [note, setNote] = useState(def)
      const handleClick = (e) => {
           e.preventDefault()
@@ -27,6 +27,10 @@ const AddNote = () => {
                     <div className="mb-3">
                          <label htmlFor="desc" className="form-label">Description</label>
                          <input type="text" className="form-control w-75" name="description" id="desc" onChange={handleChange}/>
+                    </div>
+                    <div className="mb-3">
+                         <label htmlFor="tag" className="form-label">Tag</label>
+                         <input type="text" className="form-control w-75" name="tag" id="tag" onChange={handleChange}/>
                     </div>
                     <button type="submit" className="btn btn-primary my-3" onClick={handleClick}>Add Note</button>
                </form>

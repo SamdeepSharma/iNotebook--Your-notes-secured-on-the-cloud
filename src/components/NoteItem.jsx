@@ -8,7 +8,7 @@ const NoteItem = (props) => {
      const { note } = props;
      return (
           <div>
-               <div className="card w-25 mb-3">
+               <div className="card w-100 mb-3">
                     <div className="card-body">
                          <h5 className="card-title">{note.title}</h5>
                          <p className="card-text">{note.description}</p>
