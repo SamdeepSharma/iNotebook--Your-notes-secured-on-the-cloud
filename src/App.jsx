@@ -6,6 +6,7 @@ import Notes from "./components/Notes"
 import NoteState from './context/notes/NoteState'
 import About from './components/About'
 import Contact from './components/Contact'
+import Alert from './components/Alert'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <div className='bg-body-secondary'>
       <NoteState>
         <Navbar />
+        <Alert message={"This is an amazing website"}/>
         <div className="container">
         <Routes>
           <Route exact path="/" element={<Home />} />

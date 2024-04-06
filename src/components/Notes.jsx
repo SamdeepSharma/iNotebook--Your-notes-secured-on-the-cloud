@@ -1,16 +1,22 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/jsx-no-undef */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect } from "react"
-import NoteContext from "../context/notes/NoteContext"
+import noteContext from "../context/notes/NoteContext"
+import NoteItem from "./NoteItem";
 
 const Notes = () => {
-  
-  const a = useContext(NoteContext)
-  useEffect(() => {
-    a.updateState();
-  }, [])
+  const context = useContext(noteContext)
+  const {notes} = context;
   return (
-    <div>
-     <p>notes of {a.state.name}, age {a.state.age}</p>
+    <div className="py-3">
+     <h2>Your Notes</h2>
+     <div className="row">
+     {notes.map((note)=>{
+      return <NoteItem key={note._id} note={note}/>
+      })}
+      </div>
     </div>
   )
 }
