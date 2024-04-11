@@ -16,7 +16,7 @@ const NoteState = (props) => {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwN2YwZjcwZmFiMTc3MTZiZDcwZWJlIn0sImlhdCI6MTcxMTc5NjUzMH0.ynt2m_tUmijcWYyBEB_tjytfOWtpAd6onoBMJVvqn7g"
+                'auth-token': localStorage.getItem('token')
             },
         });
         const json = await response.json()
@@ -30,21 +30,12 @@ const NoteState = (props) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "auth-token": localStorage.getItem('token')
             },
             body: JSON.stringify({title, description, tag}),
         });
-        const json_data= response.json();
+        const note = await response.json()
         //frontend logic
-        console.log(title, description, tag)
-        const note = {
-            "_id": "661113669a452915b5ceff44",
-            "user": "6607f0f70fab17716bd70ebe",
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "date": "1711805374873",
-            "__v": 0
-        }
         setNotes(notes.concat(note))
     }
 
@@ -55,7 +46,7 @@ const NoteState = (props) => {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwN2YwZjcwZmFiMTc3MTZiZDcwZWJlIn0sImlhdCI6MTcxMTc5NjUzMH0.ynt2m_tUmijcWYyBEB_tjytfOWtpAd6onoBMJVvqn7g"
+                "auth-token": localStorage.getItem('token')
             },
         });
         //frontend logic
@@ -69,22 +60,25 @@ const NoteState = (props) => {
     const editNote = async(id, title, description, tag) => {
         //API call
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYwN2YwZjcwZmFiMTc3MTZiZDcwZWJlIn0sImlhdCI6MTcxMTc5NjUzMH0.ynt2m_tUmijcWYyBEB_tjytfOWtpAd6onoBMJVvqn7g"
+                "auth-token": localStorage.getItem('token')
             },
             body: JSON.stringify({title, description, tag}),
         });
-        const json_data= response.json();
+        const json_data= await response.json();
         //frontend logic
-        for (let index = 0; index < notes.length; index++) {
-            const element = notes[index];
-            if (element._id === id)
-                element.title = title
-            element.description = description
-            element.tag = tag
+        let newNotes = JSON.parse(JSON.stringify(notes))
+        for (let index = 0; index < newNotes.length; index++) {
+            if (newNotes[index]._id === id){
+                newNotes[index].title = title
+                newNotes[index].description = description
+                newNotes[index].tag = tag
+                break;
+            }
         }
+        setNotes(newNotes)
     }
 
     return (

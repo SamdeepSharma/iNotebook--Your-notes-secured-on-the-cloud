@@ -29,10 +29,10 @@ const Navbar = () => {
                 </ul>
               </li>
             </ul>
-            <form className="d-flex" role="search">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <div className="d-flex" role="search">
+            <Link type="button" className="btn btn-outline-info mx-1" to="/login">Login</Link>
+            <Link type="button" className="btn btn-outline-info mx-1" to="/signup">Sign Up</Link>
+            </div>
           </div>
         </div>
       </nav>

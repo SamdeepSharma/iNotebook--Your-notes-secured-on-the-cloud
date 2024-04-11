@@ -7,6 +7,8 @@ import NoteState from './context/notes/NoteState'
 import About from './components/About'
 import Contact from './components/Contact'
 import Alert from './components/Alert'
+import Login from './components/Login'
+import Signup from './components/Signup'
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
           <Route exact path="/notes" element={<Notes />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/contact" element={<Contact />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/signup" element={<Signup />} />
         </Routes>
         </div>
       </NoteState>

@@ -22,15 +22,15 @@ const AddNote = () => {
                <form className="py-3">
                     <div className="mb-3">
                          <label htmlFor="title" className="form-label">Title</label>
-                         <input type="text" className="form-control w-50" aria-describedby="textHelp"  name="title" id="title" onChange={handleChange}/>
+                         <input type="text" className="form-control w-50" aria-describedby="textHelp" placeholder="Interview" name="title" id="title" value={note.title} onChange={handleChange} />
                     </div>
                     <div className="mb-3">
                          <label htmlFor="desc" className="form-label">Description</label>
-                         <input type="text" className="form-control w-75" name="description" id="desc" onChange={handleChange}/>
+                         <input type="text" className="form-control w-75" placeholder="JPMC interview scheduled at 18:00 on Hackerrank..." name="description" id="desc" value={note.description} onChange={handleChange}/>
                     </div>
                     <div className="mb-3">
                          <label htmlFor="tag" className="form-label">Tag</label>
-                         <input type="text" className="form-control w-75" name="tag" id="tag" onChange={handleChange}/>
+                         <input type="text" className="form-control w-25" placeholder="Important" name="tag" id="tag" value={note.tag} onChange={handleChange}/>
                     </div>
                     <button type="submit" className="btn btn-primary my-3" onClick={handleClick}>Add Note</button>
                </form>
