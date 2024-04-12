@@ -51,7 +51,7 @@ const Notes = () => {
 }
 
   return (
-    <div className="py-3">
+    <div className="py-2">
       <button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         Launch static backdrop modal
       </button>
@@ -87,7 +87,7 @@ const Notes = () => {
           </div>
         </div>
       </div>
-      <h2>Your Notes</h2>
+      <h2 className="my-4">Your Notes</h2>
           {notes.length === 0 && <h6 className="py-2">No notes to display!</h6>}
       <div className="row row-cols-1 row-cols-md-3 g-4">
         {notes.map((note) => {

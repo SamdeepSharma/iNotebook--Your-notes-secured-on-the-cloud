@@ -1,3 +1,27 @@
 i{
      cursor: pointer;
 }
+
+body {
+     background-color: #e6f3ff; /* Use the desired background color */
+   }
+
+   /* App.css */
+
+/* Style the scrollbar */
+::-webkit-scrollbar {
+     width: 12px; /* Width of the scrollbar */
+   }
+   
+   /* Style the thumb (dragging handle) of the scrollbar */
+   ::-webkit-scrollbar-thumb {
+     background-color: #b5dbff; /* Light blue color for the thumb */
+     border-radius: 5px; /* Rounded corners for the thumb */
+   }
+   
+   /* Hide the scrollbar track */
+   ::-webkit-scrollbar-track {
+     background: transparent; /* Invisible track */
+     background-color: #b3c7d1; /* Light blue color for the thumb */
+   }
+   

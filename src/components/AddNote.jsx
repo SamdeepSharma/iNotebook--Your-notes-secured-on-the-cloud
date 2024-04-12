@@ -28,9 +28,9 @@ const AddNote = () => {
      }
 
      return (
-          <div>
-               <h2 className="py-3">Add a Note</h2>
-               <form className="py-3">
+          <div className="py-2">
+               <h2 className="my-4">Add a Note</h2>
+               <form>
                     <div className="mb-3">
                          <label htmlFor="title" className="form-label">Title</label>
                          <input type="text" className="form-control w-50" aria-describedby="textHelp" placeholder="Interview" name="title" id="title" value={note.title} onChange={handleChange} />

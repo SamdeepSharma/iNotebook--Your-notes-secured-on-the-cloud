@@ -5,24 +5,20 @@ import Navbar from "./components/Navbar"
 import Notes from "./components/Notes"
 import NoteState from './context/notes/NoteState'
 import About from './components/About'
-import Contact from './components/Contact'
-import Alert from './components/Alert'
 import Login from './components/Login'
 import Signup from './components/Signup'
 
 function App() {
 
   return (
-    <div className='bg-body-secondary'>
+    <div>
       <NoteState>
         <Navbar />
-        <Alert message={"This is the beta release version v1.0.0 of our iNotebook cloud. Hope you love it!"}/>
         <div className="container">
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/notes" element={<Notes />} />
           <Route exact path="/about" element={<About />} />
-          <Route exact path="/contact" element={<Contact />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
         </Routes>
