@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import noteContext from "../context/notes/NoteContext"
 import { useContext, useState } from "react"
+import { toast } from 'react-toastify';
 
 const AddNote = () => {
      const context = useContext(noteContext)
@@ -10,6 +11,16 @@ const AddNote = () => {
      const handleClick = (e) => {
           e.preventDefault()
           addNote(note.title, note.description, note.tag)
+          toast('🌟 Note added!', {
+               position: "top-center",
+               autoClose: 3000,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: "light",
+               });
           setNote(def)
      }
      const handleChange = (e) => {

@@ -16,7 +16,7 @@ function App() {
     <div className='bg-body-secondary'>
       <NoteState>
         <Navbar />
-        <Alert message={"This is an amazing website"}/>
+        <Alert message={"This is the beta release version v1.0.0 of our iNotebook cloud. Hope you love it!"}/>
         <div className="container">
         <Routes>
           <Route exact path="/" element={<Home />} />

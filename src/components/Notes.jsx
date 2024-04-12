@@ -6,6 +6,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 import {useNavigate} from 'react-router-dom'
 import noteContext from "../context/notes/NoteContext"
 import NoteItem from "./NoteItem";
+import { toast } from 'react-toastify';
 
 const Notes = () => {
   const navigate = useNavigate();
@@ -36,6 +37,16 @@ const Notes = () => {
   const handleClick = (e) => {
     e.preventDefault()
     editNote(note.eid, note.etitle, note.edescription, note.etag)
+    toast('🌸 Note Updated!', {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
     refClose.current.click()
 }
 

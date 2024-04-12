@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -24,10 +25,29 @@ const Signup = () => {
       if (json.success) {
         //save the auth-token to local storage and redirect to home
         localStorage.setItem("token", json.authtoken)
+        toast.success('🍾 Signed in successfully!', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
         navigate("/")
       }
       else {
-        alert("IUser already exists!")
+        toast.error('🚨 User already exists!', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
       }
     } catch (error) {
       console.log(error)

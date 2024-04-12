@@ -1,7 +1,9 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from 'react-toastify';
 
 const Login = () => {
+
      const navigate = useNavigate();
      const [credentials, setCredentials] = useState({ email: "", password: "" })
 
@@ -22,13 +24,32 @@ const Login = () => {
                     body: JSON.stringify({ email: credentials.email, password: credentials.password }),
                });
                const json = await response.json()
-               if(json.success) {
+               if (json.success) {
                     //save the auth-token to local storage and redirect to home
                     localStorage.setItem("token", json.authtoken)
+                    toast.success('🎉 Logged in successfully!', {
+                         position: "top-center",
+                         autoClose: 3000,
+                         hideProgressBar: false,
+                         closeOnClick: true,
+                         pauseOnHover: true,
+                         draggable: true,
+                         progress: undefined,
+                         theme: "dark",
+                         });
                     navigate("/")
                }
-               else{
-                    alert("Invalid Credentials")
+               else {
+                    toast.error('🚨 Invalid Credentials!', {
+                         position: "top-center",
+                         autoClose: 3000,
+                         hideProgressBar: false,
+                         closeOnClick: true,
+                         pauseOnHover: true,
+                         draggable: true,
+                         progress: undefined,
+                         theme: "dark",
+                         });
                }
           } catch (error) {
                console.log(error)
