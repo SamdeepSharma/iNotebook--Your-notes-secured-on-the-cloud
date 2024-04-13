@@ -1,12 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import { useEffect } from "react";
 
 const Signup = () => {
   const { register, handleSubmit, formState: { errors }, watch} = useForm();
 
   const navigate = useNavigate();
   const host = 'http://localhost:5000'
+
+  useEffect(() => {
+    if(localStorage.getItem('token'))
+    {
+      navigate('/')
+    }
+  }, [])
 
   const onSubmit = async (data) => {
     console.log(data)

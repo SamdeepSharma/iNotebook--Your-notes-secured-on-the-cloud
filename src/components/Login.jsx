@@ -1,14 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Login = () => {
 
-     const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
-     const navigate = useNavigate();
+  useEffect(() => {
+    if(localStorage.getItem('token'))
+    {
+      navigate('/')
+    }
+  }, [])
 
      const host = 'http://localhost:5000'
 
