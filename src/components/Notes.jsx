@@ -36,6 +36,35 @@ const Notes = () => {
 
   const handleClick = (e) => {
     e.preventDefault()
+    if(note.etitle.trim().length <3){
+      toast.warn('Title must be atleast 3 characters!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+    return;
+  }
+    if(note.edescription.trim().length <5){
+      toast.warn('Description must be atleast 5 characters!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+    return;
+  }
+  if (!note.etag && !note.etag.trim()) {
+    note.etag = 'general'; // Set default tag value to 'general'
+  }
     editNote(note.eid, note.etitle, note.edescription, note.etag)
     toast('🌸 Note Updated!', {
       position: "top-center",
@@ -68,15 +97,15 @@ const Notes = () => {
               <form className="py-3">
                 <div className="mb-3">
                   <label htmlFor="etitle" className="form-label">Title</label>
-                  <input type="text" className="form-control w-100" aria-describedby="textHelp" name="etitle" id="etitle" value={note.etitle} onChange={handleChange} />
+                  <input type="text" className="form-control w-100" aria-describedby="textHelp" name="etitle" id="etitle" placeholder="Enter title..." value={note.etitle} onChange={handleChange} required />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="edesc" className="form-label">Description</label>
-                  <input type="text" className="form-control w-100" name="edescription" id="edesc" value={note.edescription} onChange={handleChange} />
+                  <input type="text" className="form-control w-100" name="edescription" id="edesc" value={note.edescription} placeholder="Enter description..." onChange={handleChange} required/>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="etag" className="form-label">Tag</label>
-                  <input type="text" className="form-control w-100" name="etag" id="etag" value={note.etag} onChange={handleChange} />
+                  <input type="text" className="form-control w-100" name="etag" id="etag" value={note.etag} placeholder="Enter tag..." onChange={handleChange} />
                 </div>
               </form>
             </div>

@@ -1,16 +1,20 @@
 /* eslint-disable no-unused-vars */
 import noteContext from "../context/notes/NoteContext"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import {useNavigate} from 'react-router-dom'
 
 const AddNote = () => {
+     const navigate = useNavigate();
+     const { register, handleSubmit, formState: { errors } } = useForm();
      const context = useContext(noteContext)
      const { addNote } = context;
-     const def = {title: "", description: "", tag: "" }
-     const [note, setNote] = useState(def)
-     const handleClick = (e) => {
-          e.preventDefault()
-          addNote(note.title, note.description, note.tag)
+     const onSubmitForm = (data) => {
+          if (!data.tag.trim()) {
+               data.tag = 'general'; // Set default tag value to 'general'
+             }
+          addNote(data.title, data.description, data.tag)
           toast('🌟 Note added!', {
                position: "top-center",
                autoClose: 3000,
@@ -20,31 +24,63 @@ const AddNote = () => {
                draggable: true,
                progress: undefined,
                theme: "light",
-               });
-          setNote(def)
-     }
-     const handleChange = (e) => {
-          setNote({...note, [e.target.name]: e.target.value})
+          });
+          navigate('/notes')
      }
 
      return (
           <div className="py-2">
                <h2 className="my-4">Add a Note</h2>
-               <form>
-                    <div className="mb-3">
-                         <label htmlFor="title" className="form-label">Title</label>
-                         <input type="text" className="form-control w-50" aria-describedby="textHelp" placeholder="Interview" name="title" id="title" value={note.title} onChange={handleChange} />
-                    </div>
-                    <div className="mb-3">
-                         <label htmlFor="desc" className="form-label">Description</label>
-                         <input type="text" className="form-control w-75" placeholder="JPMC interview scheduled at 18:00 on Hackerrank..." name="description" id="desc" value={note.description} onChange={handleChange}/>
-                    </div>
-                    <div className="mb-3">
-                         <label htmlFor="tag" className="form-label">Tag</label>
-                         <input type="text" className="form-control w-25" placeholder="Important" name="tag" id="tag" value={note.tag} onChange={handleChange}/>
-                    </div>
-                    <button type="submit" className="btn btn-primary my-3" onClick={handleClick}>Add Note</button>
-               </form>
+               <form onSubmit={handleSubmit(onSubmitForm)}>
+      <div className="mb-3">
+        <label htmlFor="title" className="form-label">Title</label>
+        <input
+          type="text"
+          className={`form-control ${errors.title ? 'is-invalid' : ''} w-50`}
+          id="title"
+          placeholder="Books to read"
+          {...register('title', {
+            required: 'Title is required',
+            minLength: {
+              value: 3,
+              message: 'Title must be at least 3 characters'
+            }
+          })}
+        />
+        {errors.title && <div className="invalid-feedback">{errors.title.message}</div>}
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="description" className="form-label">Description</label>
+        <input
+          type="text"
+          className={`form-control ${errors.description ? 'is-invalid' : ''} w-75`}
+          id="description"
+          placeholder="The Silent Path by Michael J. Eastcott, The Midnight Garden by Elaine Roth,..."
+          {...register('description', {
+            required: 'Description is required',
+            minLength: {
+              value: 5,
+              message: 'Description must be at least 5 characters'
+            }
+          })}
+        />
+        {errors.description && <div className="invalid-feedback">{errors.description.message}</div>}
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="tag" className="form-label">Tag</label>
+        <input
+          type="text"
+          className={`form-control w-25`}
+          id="tag"
+          placeholder="Hobby"
+          {...register('tag')}
+        />
+      </div>
+
+      <button type="submit" className="btn btn-primary my-3">Add Note</button>
+    </form>
           </div>
      )
 }

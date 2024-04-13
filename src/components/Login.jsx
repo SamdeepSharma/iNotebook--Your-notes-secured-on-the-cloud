@@ -1,27 +1,31 @@
-import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useState } from "react";
 
 const Login = () => {
 
-     const navigate = useNavigate();
-     const [credentials, setCredentials] = useState({ email: "", password: "" })
+     const { register, handleSubmit, formState: { errors } } = useForm();
 
-     const handleChange = (e) => {
-          setCredentials({ ...credentials, [e.target.name]: e.target.value })
-     }
+     const navigate = useNavigate();
 
      const host = 'http://localhost:5000'
 
-     const handleSubmit = async (e) => {
-          e.preventDefault()
+     const [showPassword, setShowPassword] = useState(false);
+
+     const togglePasswordVisibility = () => {
+          setShowPassword(!showPassword);
+     };
+
+     const onSubmit = async (data) => {
           try {
                const response = await fetch(`${host}/api/auth/login`, {
                     method: "POST",
                     headers: {
                          "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ email: credentials.email, password: credentials.password }),
+                    body: JSON.stringify({ email: data.email, password: data.password }),
                });
                const json = await response.json()
                if (json.success) {
@@ -36,7 +40,7 @@ const Login = () => {
                          draggable: true,
                          progress: undefined,
                          theme: "dark",
-                         });
+                    });
                     navigate("/")
                }
                else {
@@ -49,7 +53,7 @@ const Login = () => {
                          draggable: true,
                          progress: undefined,
                          theme: "dark",
-                         });
+                    });
                }
           } catch (error) {
                console.log(error)
@@ -59,17 +63,58 @@ const Login = () => {
      return (
           <div>
                <h2 className="my-4">Login to continue to iNotebook cloud</h2>
-               <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                         <input type="email" className="form-control" id="exampleInputEmail1" placeholder="example123@example.com" onChange={handleChange} value={credentials.email} name="email" aria-describedby="emailHelp" />
-                    </div>
-                    <div className="mb-3">
-                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                         <input type="password" className="form-control" name="password" placeholder="Example123#" onChange={handleChange} value={credentials.password} id="exampleInputPassword1" />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
-               </form>
+               <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="mb-3">
+        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+        <input
+          type="email"
+          className={`form-control w-100 ${errors.email ? 'is-invalid' : ''}`}
+          id="exampleInputEmail1"
+          placeholder="example123@example.com"
+          {...register('email', {
+            required: 'Email is required',
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: 'Invalid email format'
+            }
+          })}
+        />
+        {errors.email && <div className="invalid-feedback">{errors.email.message}</div>}
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+        <div className="input-group">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            className={`form-control ${errors.password ? 'is-invalid' : ''} w-75`}
+            id="exampleInputPassword1"
+            placeholder="Example123#"
+            {...register('password', {
+              required: 'Password is required',
+              minLength: {
+                value: 8,
+                message: 'Password must be at least 8 characters'
+              },
+              pattern: {
+                value: /^(?=.*[A-Za-z])(?=.*\d).{8,}$/,
+                message: 'Password must contain at least one letter and one number'
+              }
+            })}
+          />
+          <button
+            type="button"
+            className="btn d-flex align-items-center"
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? <FaEyeSlash className="me-2" /> : <FaEye className="me-2" />}
+          </button>
+        </div>
+        {errors.password && <div className="invalid-feedback">{errors.password.message}</div>}
+      </div>
+
+      <button type="submit" className="btn btn-primary">Submit</button>
+    </form>
           </div>
      )
 }
