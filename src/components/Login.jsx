@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useState, useEffect } from "react";
+import env from "react-dotenv";
 
 const Login = () => {
 
@@ -17,7 +18,7 @@ const Login = () => {
     }
   }, [])
 
-     const host = 'http://localhost:5000'
+     const host = env.HOST_URL;
 
      const [showPassword, setShowPassword] = useState(false);
 

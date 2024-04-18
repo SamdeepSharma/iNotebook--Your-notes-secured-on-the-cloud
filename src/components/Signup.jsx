@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useEffect } from "react";
+import env from "react-dotenv";
 
 const Signup = () => {
   const { register, handleSubmit, formState: { errors }, watch} = useForm();
 
   const navigate = useNavigate();
-  const host = 'http://localhost:5000'
+  const host = env.HOST_URL
 
   useEffect(() => {
     if(localStorage.getItem('token'))

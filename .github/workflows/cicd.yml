@@ -1,0 +1,38 @@
+name: Deploy Node Application
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker Image
+        run: docker build -t samdeepsharma/inotebook-cloud --build-arg SERVER_BASE_URL='${{secrets.SERVER_BASE_URL}}'
+
+      - name: Publish Image to Docker Hub
+        run: docker push samdeepsharma/inotebook-cloud:latest
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from Docker Hub
+        run: docker pull samdeepsharma/inotebook-cloud:latest
+
+      - name: Delete old container
+        run: docker rm -f nodejs-app-container
+
+      - name: Run Docker Container
+        run: |
+          docker run -d -p 5173:80 \
+            --name nodejs-app-container \
+            samdeepsharma/inotebook-cloud:latest

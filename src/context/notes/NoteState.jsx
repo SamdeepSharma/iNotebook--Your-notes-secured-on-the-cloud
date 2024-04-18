@@ -2,9 +2,10 @@
 /* eslint-disable react/prop-types */
 import NoteContext from "./NoteContext";
 import { useState } from "react";
+import env from "react-dotenv";
 
 const NoteState = (props) => {
-    const host = 'http://localhost:5000'
+    const host = env.HOST_URL
     const initialNotes = []
 
     const [notes, setNotes] = useState(initialNotes)
