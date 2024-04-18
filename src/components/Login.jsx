@@ -25,7 +25,7 @@ const Login = () => {
      };
 
      const onSubmit = async (data) => {
-      console.log(import.meta.env.SERVER_BASE_URL)
+          console.log(`${host}/api/auth/login`)
           try {
                const response = await fetch(`${host}/api/auth/login`, {
                     method: "POST",
