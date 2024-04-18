@@ -44,11 +44,11 @@ jobs:
 
       - name: Stop and Remove Old Container
         run: |
-          docker stop nodejs-app-container || true
-          docker rm nodejs-app-container || true
+          docker stop react-app-container || true
+          docker rm react-app-container || true
 
       - name: Run Docker Container
         run: |
           docker run -d -p 5173:80 \
-            --name nodejs-app-container \
+            --name react-app-container \
             samdeepsharma/inotebook-cloud:latest
