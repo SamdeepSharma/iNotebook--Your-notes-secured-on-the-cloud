@@ -1,4 +1,4 @@
-name: Deploy Node Application
+name: Deploy Vite Application
 
 on:
   push:
@@ -12,14 +12,26 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Vite Application
+        run: npm run build
+
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker Image
         run: |
           docker build --tag samdeepsharma/inotebook-cloud \
-            --build-arg SERVER_BASE_URL="${{ secrets.SERVER_BASE_URL }}" .
- 
+            --build-arg SERVER_BASE_URL="${{ secrets.SERVER_BASE_URL }}" \
+            .
+
       - name: Publish Image to Docker Hub
         run: docker push samdeepsharma/inotebook-cloud:latest
 
@@ -30,8 +42,10 @@ jobs:
       - name: Pull image from Docker Hub
         run: docker pull samdeepsharma/inotebook-cloud:latest
 
-      - name: Delete old container
-        run: docker rm -f nodejs-app-container
+      - name: Stop and Remove Old Container
+        run: |
+          docker stop nodejs-app-container || true
+          docker rm nodejs-app-container || true
 
       - name: Run Docker Container
         run: |
