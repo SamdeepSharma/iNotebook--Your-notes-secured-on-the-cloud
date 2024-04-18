@@ -4,10 +4,8 @@ import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useState, useEffect } from "react";
-import env from "react-dotenv";
 
 const Login = () => {
-
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
@@ -18,7 +16,7 @@ const Login = () => {
     }
   }, [])
 
-     const host = env.HOST_URL;
+  const host = import.meta.env.SERVER_BASE_URL;
 
      const [showPassword, setShowPassword] = useState(false);
 
@@ -27,6 +25,7 @@ const Login = () => {
      };
 
      const onSubmit = async (data) => {
+      console.log(import.meta.env.SERVER_BASE_URL)
           try {
                const response = await fetch(`${host}/api/auth/login`, {
                     method: "POST",

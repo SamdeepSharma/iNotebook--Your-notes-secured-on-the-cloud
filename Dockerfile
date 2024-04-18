@@ -4,7 +4,7 @@ FROM node:alpine3.18 as build
 ARG SERVER_BASE_URL
 
 #Set default values for environment variables
-ENV HOST_URL = ${SERVER_BASE_URL}
+ENV SERVER_BASE_URL = ${SERVER_BASE_URL}
 
 #Build App
 WORKDIR /app
