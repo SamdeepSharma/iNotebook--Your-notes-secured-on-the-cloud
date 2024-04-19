@@ -8,7 +8,7 @@ const Signup = () => {
   const { register, handleSubmit, formState: { errors }, watch} = useForm();
 
   const navigate = useNavigate();
-  const host = 'http://3.111.30.209:5000';
+  const host = import.meta.env.SERVER_BASE_URL;
 
   useEffect(() => {
     if(localStorage.getItem('token'))
@@ -18,7 +18,6 @@ const Signup = () => {
   }, [])
 
   const onSubmit = async (data) => {
-    console.log(data)
     try {
       const response = await fetch(`${host}/api/auth/createuser`, {
         method: "POST",

@@ -5,7 +5,7 @@ import NoteContext from "./NoteContext";
 import { useState } from "react";
 
 const NoteState = (props) => {
-    const host = 'http://3.111.30.209:5000';
+    const host = import.meta.env.SERVER_BASE_URL;
     const initialNotes = []
 
     const [notes, setNotes] = useState(initialNotes)

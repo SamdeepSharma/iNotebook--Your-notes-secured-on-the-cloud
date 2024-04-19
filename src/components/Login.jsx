@@ -10,67 +10,69 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(localStorage.getItem('token'))
-    {
+    if (localStorage.getItem('token')) {
       navigate('/')
     }
   }, [])
 
-  const host = 'http://3.111.30.209:5000';
+  const host = import.meta.env.SERVER_BASE_URL;
 
-     const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-     const togglePasswordVisibility = () => {
-          setShowPassword(!showPassword);
-     };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
-     const onSubmit = async (data) => {
-          console.log(`${host}/api/auth/login`)
-          try {
-               const response = await fetch(`${host}/api/auth/login`, {
-                    method: "POST",
-                    headers: {
-                         "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email: data.email, password: data.password }),
-               });
-               const json = await response.json()
-               if (json.success) {
-                    //save the auth-token to local storage and redirect to home
-                    localStorage.setItem("token", json.authtoken)
-                    toast.success('🎉 Logged in successfully!', {
-                         position: "top-center",
-                         autoClose: 3000,
-                         hideProgressBar: false,
-                         closeOnClick: true,
-                         pauseOnHover: true,
-                         draggable: true,
-                         progress: undefined,
-                         theme: "dark",
-                    });
-                    navigate("/")
-               }
-               else {
-                    toast.error('🚨 Invalid Credentials!', {
-                         position: "top-center",
-                         autoClose: 3000,
-                         hideProgressBar: false,
-                         closeOnClick: true,
-                         pauseOnHover: true,
-                         draggable: true,
-                         progress: undefined,
-                         theme: "dark",
-                    });
-               }
-          } catch (error) {
-               console.log(error)
-          }
-     }
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch(`${host}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: data.email, password: data.password }),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
-     return (
-          <div>
-               <h2 className="my-4">Login to continue to iNotebook cloud</h2>
-               <form onSubmit={handleSubmit(onSubmit)}>
+      const json = await response.json()
+    if (json.success) {
+      //save the auth-token to local storage and redirect to home
+      localStorage.setItem("token", json.authtoken)
+      toast.success('🎉 Logged in successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate("/")
+    }
+    else {
+      toast.error('🚨 Invalid Credentials!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+return (
+  <div>
+    <h2 className="my-4">Login to continue to iNotebook cloud</h2>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-3">
         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
         <input
@@ -122,8 +124,8 @@ const Login = () => {
 
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
-          </div>
-     )
+  </div>
+)
 }
 
 export default Login
