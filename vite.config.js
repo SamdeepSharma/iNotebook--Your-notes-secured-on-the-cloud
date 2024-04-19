@@ -2,7 +2,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-const serverBaseUrl = process.env.SERVER_BASE_URL || 'http://3.111.30.209:5000';
+const serverBaseUrl = process.env.SERVER_BASE_URL || 'http://localhost:5000';
 
 // https://vitejs.dev/config/
 export default defineConfig({
