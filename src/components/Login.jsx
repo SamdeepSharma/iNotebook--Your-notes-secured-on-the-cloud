@@ -16,7 +16,7 @@ const Login = () => {
     }
   }, [])
 
-  const host = import.meta.env.SERVER_BASE_URL;
+  const host = 'http://3.111.30.209:5000';
 
      const [showPassword, setShowPassword] = useState(false);
 

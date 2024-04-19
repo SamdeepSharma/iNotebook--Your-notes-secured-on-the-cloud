@@ -8,7 +8,7 @@ const Signup = () => {
   const { register, handleSubmit, formState: { errors }, watch} = useForm();
 
   const navigate = useNavigate();
-  const host = import.meta.env.SERVER_BASE_URL;
+  const host = 'http://3.111.30.209:5000';
 
   useEffect(() => {
     if(localStorage.getItem('token'))
