@@ -2,7 +2,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-const serverBaseUrl = 'https://i-notebook-backend-beige.vercel.app/';
+const serverBaseUrl = 'https://i-notebook-backend-beige.vercel.app';
 
 // https://vitejs.dev/config/
 export default defineConfig({
