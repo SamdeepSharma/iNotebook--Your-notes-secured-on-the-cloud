@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 const Notes = () => {
   const navigate = useNavigate();
   const context = useContext(noteContext)
-  const { notes, fetchNotes, editNote } = context;
+  const { notes, fetchNotes, editNote, deleteNote } = context;
   useEffect(() => {
     if(localStorage.getItem('token')){
     fetchNotes()
@@ -22,8 +22,11 @@ const Notes = () => {
   }, [])
 
   const [note, setNote] = useState({eid:"", etitle: "", edescription: "", etag: "" })
+  const [noteid, setNoteid] = useState({Nid: ""})
   const ref = useRef(null)
   const refClose = useRef(null)
+  const delref = useRef(null);
+  const openRef = useRef(null);
 
   const updateNote = (currentNote) => {
     ref.current.click()
@@ -33,6 +36,26 @@ const Notes = () => {
   const handleChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value })
   }
+
+  const confirmDelete = (note) =>{
+    setNoteid({Nid: note._id})
+    openRef.current.click()
+}
+
+const handleDelete = () => {
+  deleteNote(noteid.Nid)
+  delref.current.click()
+  toast('🗑️ Note Deleted!', {
+       position: "top-center",
+       autoClose: 3000,
+       hideProgressBar: false,
+       closeOnClick: true,
+       pauseOnHover: true,
+       draggable: true,
+       progress: undefined,
+       theme: "light",
+       });
+}
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -113,6 +136,23 @@ const Notes = () => {
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={refClose}>Cancel</button>
               <button type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
             </div>
+            <div className="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                         <div className="modal-content">
+                              <div className="modal-header">
+                                   <h1 className="modal-title fs-5" id="staticBackdropLabel">Do you really want to delete this note?</h1>
+                                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div className="d-flex justify-content-center my-3">
+                                   <button type="button" className="btn btn-secondary mx-2" data-bs-dismiss="modal" ref={delref}>No</button>
+                                   <button type="button" className="btn btn-primary mx-2" onClick={handleDelete}>Yes, Delete</button>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+               <button type="button" ref={openRef} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                    Launch static backdrop modal
+               </button>
           </div>
         </div>
       </div>
@@ -120,7 +160,7 @@ const Notes = () => {
           {notes.length === 0 && <h6 className="py-2">No notes to display!</h6>}
       <div className="row row-cols-1 row-cols-md-3 g-4">
         {notes.map((note) => {
-          return <NoteItem key={note._id} updateNote={updateNote} note={note} />
+          return <NoteItem key={note._id} confirmDelete={confirmDelete} updateNote={updateNote} note={note} />
         })}
       </div>
     </div>
