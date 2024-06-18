@@ -38,7 +38,7 @@ const AddNote = () => {
           type="text"
           className={`form-control ${errors.title ? 'is-invalid' : ''} w-50`}
           id="title"
-          placeholder="Books to read"
+          placeholder="Enter title"
           {...register('title', {
             required: 'Title is required',
             minLength: {
@@ -56,7 +56,7 @@ const AddNote = () => {
           type="text"
           className={`form-control ${errors.description ? 'is-invalid' : ''} w-75`}
           id="description"
-          placeholder="The Silent Path by Michael J. Eastcott, The Midnight Garden by Elaine Roth,..."
+          placeholder="Enter description"
           {...register('description', {
             required: 'Description is required',
             minLength: {
@@ -74,7 +74,7 @@ const AddNote = () => {
           type="text"
           className={`form-control w-25`}
           id="tag"
-          placeholder="Hobby"
+          placeholder="Enter tag"
           {...register('tag')}
         />
       </div>
